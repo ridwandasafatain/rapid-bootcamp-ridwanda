@@ -10,7 +10,7 @@ import org.springframework.beans.BeanUtils;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Product {
-    private Integer id;
+    private Long id;
     private String code;
     private String name;
     private Double price;
@@ -29,5 +29,11 @@ public class Product {
             this.categoryName = entity.getCategory().getName();
         }
     }
+    public Product(Long id, String name, Double price) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+    }
+
 
 }

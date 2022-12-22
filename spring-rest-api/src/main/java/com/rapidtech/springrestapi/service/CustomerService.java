@@ -8,9 +8,9 @@ import java.util.Optional;
 
 public interface CustomerService {
     List<Customer> getAll();
-    Optional<Customer>  getById(int id);
+    Optional<Customer>  getById(Long id);
     Optional<Customer> save(Customer model);
-    Optional<Customer> update(Integer id, Customer model);
-    Optional<Customer> delete(Integer id);
+    Optional<Customer> update(Long id, Customer model);
+    Optional<Customer> delete(Long id);
 
 }

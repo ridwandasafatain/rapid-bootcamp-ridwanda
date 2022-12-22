@@ -1,9 +1,8 @@
 package com.rapidtech.springrestapi.controller;
 
-import com.rapidtech.springrestapi.model.Customer;
+import com.rapidtech.springrestapi.model.PurchaseOrder;
 import com.rapidtech.springrestapi.model.ResponseModel;
-import com.rapidtech.springrestapi.service.CustomerService;
-import com.rapidtech.springrestapi.service.CustomerService;
+import com.rapidtech.springrestapi.service.PurchaseOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,19 +11,19 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("/purchaseOrder")
 
-public class CustomerController {
-    private CustomerService service;
+public class PurchaseOrderController {
+    private PurchaseOrderService service;
 
     @Autowired
-    public CustomerController(CustomerService service) {
+    public PurchaseOrderController(PurchaseOrderService service) {
         this.service = service;
     }
 
     @GetMapping
     public ResponseEntity<Object> get(){
-        List<Customer> result = service.getAll();
+        List<PurchaseOrder> result = service.getAll();
         return ResponseEntity.ok().body(
                 new ResponseModel(200,"SUCCESS", result)
         );
@@ -32,23 +31,23 @@ public class CustomerController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getById(@PathVariable("id") Long id){
-        Optional<Customer> result = service.getById(id);
+        Optional<PurchaseOrder> result = service.getById(id);
         return ResponseEntity.ok().body(
                 new ResponseModel(200,"SUCCESS", result)
         );
     }
 
     @PostMapping()
-    public ResponseEntity<Object> saveCustomer(@RequestBody Customer request){
-        Optional<Customer> result = service.save(request);
+    public ResponseEntity<Object> savePurchaseOrder(@RequestBody PurchaseOrder request){
+        Optional<PurchaseOrder> result = service.save(request);
         return ResponseEntity.ok().body(
                 new ResponseModel(200,"SUCCESS", result)
         );
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Object> updateCustomer(@PathVariable("id") Long id, @RequestBody Customer request){
-        Optional<Customer> result = service.update(id, request);
+    public ResponseEntity<Object> updatePurchaseOrder(@PathVariable("id") Long id, @RequestBody PurchaseOrder request){
+        Optional<PurchaseOrder> result = service.update(id, request);
         return ResponseEntity.ok().body(
                 new ResponseModel(200,"SUCCESS", result)
         );
@@ -56,7 +55,7 @@ public class CustomerController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable("id") Long id){
-        Optional<Customer> result = service.delete(id);
+        Optional<PurchaseOrder> result = service.delete(id);
         return ResponseEntity.ok().body(
                 new ResponseModel(200,"SUCCESS", result)
         );

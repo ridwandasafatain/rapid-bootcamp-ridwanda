@@ -8,6 +8,8 @@ import org.springframework.beans.BeanUtils;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "product_tab")
@@ -37,6 +39,16 @@ public class ProductEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id", insertable = false, updatable = false)
     private CategoryEntity category;
+
+    @Column(name = "supplier_id", nullable = false)
+    private Long supplierId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "supplier_id", insertable = false, updatable = false)
+    private SupplierEntity supplier;
+
+    @OneToMany(mappedBy = "product")
+    private Set<PurchaseOrderDetailEntity> purchaseOrderDetails = new HashSet<>();
+
 
     public ProductEntity(Product model) {
         BeanUtils.copyProperties(model, this);

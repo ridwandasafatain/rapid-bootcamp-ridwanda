@@ -24,13 +24,19 @@ public class CustomerController {
 
     @GetMapping
     public ResponseEntity<Object> getAll(){
-        List<CustomerReq> result = service.getAll();
+        List<CustomerDetail> result = service.getAll();
         return ResponseEntity.ok().body(result);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> saveCustomer(@RequestBody CustomerReq customerReq){
-        Optional<CustomerReq> result = service.save(customerReq);
+    public ResponseEntity<Object> saveCustomer(@RequestBody CustomerDetail model){
+        Optional<CustomerDetail> result = service.save(model);
         return ResponseEntity.ok().body(result);
     }
+
+    @PostMapping("/saveAll")
+    public ResponseEntity<Object> saveAll(@RequestBody CustomerReq request){
+        return ResponseEntity.ok().body(service.saveAll(request));
+    }
+
 }

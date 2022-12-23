@@ -14,7 +14,4 @@ import java.util.List;
 public class CustomerReq {
     private List<CustomerDetail> customers;
 
-    public CustomerReq(CustomerEntity entity) {
-        BeanUtils.copyProperties(entity, this);
-    }
 }

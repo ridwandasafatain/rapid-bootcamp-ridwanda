@@ -1,12 +1,15 @@
 package com.rapidtech.springjson.model;
 
+import com.rapidtech.springjson.entity.CustomerEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -24,4 +27,8 @@ public class CustomerDetail {
     private Date dateOfBirth;
     private String placeOfBirth;
     private List<School> schools;
+
+    public CustomerDetail(CustomerEntity entity) {
+        BeanUtils.copyProperties(entity, this);
+    }
 }

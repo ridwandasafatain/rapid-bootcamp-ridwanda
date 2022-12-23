@@ -1,8 +1,11 @@
 package com.rapidtech.springjson.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.rapidtech.springjson.model.School;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
 
 import javax.persistence.*;
 
@@ -25,9 +28,14 @@ public class SchoolEntity {
     @Column(name = "school_level", length = 50, nullable = false)
     private String level;
 
-    @Column(name = "customer_id", nullable = false)
+    @Column(name = "customer_id", insertable = false, updatable = false)
     private Long customerId;
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "customer_id", insertable = false, updatable = false)
+    @JoinColumn(name = "customer_id", nullable = false)
     private CustomerEntity customer;
+
+    public SchoolEntity(School model) {
+        BeanUtils.copyProperties(model, this);
+    }
 }

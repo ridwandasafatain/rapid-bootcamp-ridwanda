@@ -1,5 +1,6 @@
 package com.rapidtech.springjson.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rapidtech.springjson.model.Address;
 import com.rapidtech.springjson.model.CustomerDetail;
 import com.rapidtech.springjson.model.CustomerReq;
@@ -11,6 +12,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -37,13 +39,41 @@ public class CustomerEntity {
     @Column(name = "place_of_birth", nullable = false)
     private String placeOfBirth;
 
-    @OneToMany(mappedBy = "customer")
-    private Set<AddressEntity> address;
+    @JsonIgnore
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private List<AddressEntity> address = new ArrayList<>();
 
-    @OneToMany(mappedBy = "customer")
-    private Set<SchoolEntity> schools;
+    @JsonIgnore
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private List<SchoolEntity> schools = new ArrayList<>();
 
-    public CustomerEntity(CustomerReq model) {
-        BeanUtils.copyProperties(model,this);
+    public CustomerEntity(CustomerDetail model) {
+        BeanUtils.copyProperties(model, this);
+    }
+
+    public void addAddress(AddressEntity address){
+        this.address.add(address);
+        address.setCustomer(this);
+    }
+    public void addAddressList(List<Address> models){
+        for(Address address : models){
+            this.addAddress(new AddressEntity(address));
+        }
+    }
+
+    public void addSchool(SchoolEntity schoolEntity){
+        this.schools.add(schoolEntity);
+        schoolEntity.setCustomer(this);
+    }
+    public void addSchoolList(List<School> models){
+        for(School school : models){
+            this.addSchool(new SchoolEntity(school));
+        }
+    }
+
+    public CustomerEntity(Long id, String fullName, String gender) {
+        this.id = id;
+        this.fullName = fullName;
+        this.gender = gender;
     }
 }
